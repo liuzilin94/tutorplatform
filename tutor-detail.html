@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>家教管理系统 - 老师详情</title>
+  <style>
+    :root {
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: #181b2c;
+      background-color: #edf1fb;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      background: radial-gradient(circle at 20% 20%, #f5f8ff, #e4e8f6, #dfe3f2);
+    }
+    aside {
+      width: 268px;
+      background: #1e2445;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 32px 24px;
+      gap: 32px;
+    }
+    .brand {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    nav a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+    nav a.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+    main {
+      flex: 1;
+      padding: 40px 48px 56px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.92));
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      padding: 16px 24px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #5168ff, #7fa7ff);
+      color: #fff;
+      box-shadow: 0 18px 35px rgba(74, 96, 255, 0.25);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .back-link {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 30px 45px rgba(31, 45, 105, 0.12);
+      margin-bottom: 20px;
+    }
+    .card h2 {
+      margin: 0 0 16px;
+      font-size: 20px;
+      color: #262b3f;
+    }
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      color: #3b4154;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .info-label {
+      font-size: 13px;
+      color: #6a7190;
+    }
+    .info-value {
+      font-size: 15px;
+      color: #262b3f;
+      font-weight: 500;
+    }
+    .pill {
+      display: inline-flex;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: rgba(77, 111, 255, 0.12);
+      color: #4d5cff;
+      font-weight: 600;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+    .price-tag {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1f2a60;
+      margin: 12px 0;
+    }
+    .rating {
+      color: #f5a623;
+      font-size: 16px;
+      font-weight: 600;
+      margin: 8px 0;
+    }
+    .description {
+      color: #5a627f;
+      line-height: 1.6;
+      margin: 12px 0;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid #e3e6f3;
+    }
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 14px 24px;
+      font-size: 15px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(120deg, #4f6bff, #89b1ff);
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(65, 92, 255, 0.25);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(65, 92, 255, 0.35);
+    }
+    .btn-secondary {
+      background: rgba(77, 111, 255, 0.1);
+      color: #4d5cff;
+    }
+    .btn-secondary:hover {
+      background: rgba(77, 111, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <div class="brand">家教管理系统</div>
+    <nav>
+      <ul>
+        <li><a href="./dashboard-family.html">返回工作台</a></li>
+        <li><a href="./listing-family.html">家教推荐</a></li>
+        <li><a href="./schedule-family.html">预约课程</a></li>
+        <li><a href="#">支付与账单</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main>
+    <header>
+      <div>
+        <a href="./listing-family.html" class="back-link">← 返回老师列表</a>
+        <h1>老师详情</h1>
+      </div>
+    </header>
+
+    <div class="card">
+      <h2>老师档案</h2>
+      <h3 id="tutorNameDisplay">李晓雪 · 高中数学</h3>
+      <div class="price-tag" id="priceDisplay">¥420 / 小时</div>
+      <div class="rating" id="ratingDisplay">评分 4.9 ★</div>
+      <div style="margin: 16px 0;">
+        <span class="pill" id="experienceDisplay">5 年经验</span>
+        <span class="pill" id="educationDisplay">985 本科</span>
+        <span class="pill" id="modeDisplay">线下面授</span>
+        <span class="pill" id="subjectDisplay">数学</span>
+      </div>
+      <p class="description" id="descriptionDisplay">
+        擅长高三冲刺与函数专题，曾辅导 20+ 学生斩获 130+ 高分。
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>详细介绍</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">教学经验</span>
+          <span class="info-value" id="experienceDetailDisplay">5 年</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">学历背景</span>
+          <span class="info-value" id="educationDetailDisplay">985 本科</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">擅长科目</span>
+          <span class="info-value" id="subjectDetailDisplay">数学（高中）</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">授课方式</span>
+          <span class="info-value" id="modeDetailDisplay">线下面授、线上</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">学生评价</span>
+          <span class="info-value" id="ratingDetailDisplay">4.9 / 5.0（28条评价）</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">成功案例</span>
+          <span class="info-value" id="casesDisplay">20+ 学生获得 130+ 高分</span>
+        </div>
+      </div>
+      <p class="description" style="margin-top: 16px;" id="fullDescriptionDisplay">
+        专注于高中数学教学，特别擅长函数、解析几何等难点专题。教学方法灵活，能够根据学生特点制定个性化学习方案。曾帮助多名学生从 90 分提升至 130+ 分，深受学生和家长好评。
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>可排时间与价格</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">课时单价</span>
+          <span class="info-value" id="priceDetailDisplay">¥420 / 小时</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">可授课时间</span>
+          <span class="info-value" id="availableTimeDisplay">周末全天、周三晚、周五晚</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">授课方式</span>
+          <span class="info-value" id="modeTimeDisplay">线下面授、线上视频</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">服务区域</span>
+          <span class="info-value" id="serviceAreaDisplay">海淀区、朝阳区（线下）</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>资质与安全信息</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">学历认证</span>
+          <span class="info-value" style="color: #14935b;">✓ 已认证</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">身份认证</span>
+          <span class="info-value" style="color: #14935b;">✓ 已认证</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">平台审核</span>
+          <span class="info-value" style="color: #14935b;">✓ 已通过</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">安全记录</span>
+          <span class="info-value" style="color: #14935b;">✓ 无不良记录</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>操作区</h2>
+      <div class="action-buttons">
+        <button class="btn btn-primary" id="bookBtn">预约该老师</button>
+        <button class="btn btn-secondary" id="contactBtn">与老师沟通时间</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    /**
+     * 老师详情页面
+     * 功能：
+     * 1. 从URL参数获取老师ID并显示详情
+     * 2. 点击"预约该老师"按钮，跳转到预约页面并传递老师信息
+     */
+
+    // 从URL获取老师ID
+    const urlParams = new URLSearchParams(window.location.search);
+    const tutorId = urlParams.get('id') || '1';
+
+    // 模拟老师数据（实际应从后端API获取）
+    const tutorData = {
+      '1': {
+        name: '李晓雪 · 高中数学',
+        price: 420,
+        rating: 4.9,
+        experience: '5 年经验',
+        education: '985 本科',
+        mode: '线下面授',
+        subject: '数学',
+        description: '擅长高三冲刺与函数专题，曾辅导 20+ 学生斩获 130+ 高分。',
+        fullDescription: '专注于高中数学教学，特别擅长函数、解析几何等难点专题。教学方法灵活，能够根据学生特点制定个性化学习方案。曾帮助多名学生从 90 分提升至 130+ 分，深受学生和家长好评。',
+        experienceDetail: '5 年',
+        educationDetail: '985 本科',
+        subjectDetail: '数学（高中）',
+        modeDetail: '线下面授、线上',
+        ratingDetail: '4.9 / 5.0（28条评价）',
+        cases: '20+ 学生获得 130+ 高分',
+        availableTime: '周末全天、周三晚、周五晚',
+        modeTime: '线下面授、线上视频',
+        serviceArea: '海淀区、朝阳区（线下）'
+      },
+      '2': {
+        name: '王晨 · 初中英语',
+        price: 260,
+        rating: 4.8,
+        experience: '3 年经验',
+        education: '海外硕士',
+        mode: '线上授课',
+        subject: '英语',
+        description: '主攻口语听力，提供定制教材与录音反馈，适合提升表达能力。',
+        fullDescription: '拥有海外留学背景，英语口语流利。专注于初中英语教学，特别擅长口语和听力训练。提供定制化教材和录音反馈，帮助学生快速提升英语表达能力。',
+        experienceDetail: '3 年',
+        educationDetail: '海外硕士',
+        subjectDetail: '英语（初中）',
+        modeDetail: '线上视频',
+        ratingDetail: '4.8 / 5.0（15条评价）',
+        cases: '15+ 学生口语能力显著提升',
+        availableTime: '周一、周三、周五晚 19:00-21:00',
+        modeTime: '线上视频',
+        serviceArea: '线上不限'
+      },
+      '3': {
+        name: '赵静 · 小学语文',
+        price: 300,
+        rating: 4.7,
+        experience: '8 年经验',
+        education: '教研认证',
+        mode: '线下上门',
+        subject: '语文',
+        description: '善于激发阅读兴趣，结合作文点评与阅读计划双线提升。',
+        fullDescription: '拥有 8 年小学语文教学经验，获得教研认证。善于激发学生的阅读兴趣，通过作文点评和阅读计划双线提升学生的语文能力。',
+        experienceDetail: '8 年',
+        educationDetail: '教研认证',
+        subjectDetail: '语文（小学）',
+        modeDetail: '线下上门',
+        ratingDetail: '4.7 / 5.0（22条评价）',
+        cases: '30+ 学生语文成绩提升明显',
+        availableTime: '周末全天、周三晚',
+        modeTime: '线下上门',
+        serviceArea: '海淀区、朝阳区、西城区'
+      }
+    };
+
+    // 获取当前老师数据
+    const currentTutor = tutorData[tutorId] || tutorData['1'];
+
+    // 填充页面数据
+    document.getElementById('tutorNameDisplay').textContent = currentTutor.name;
+    document.getElementById('priceDisplay').textContent = `¥${currentTutor.price} / 小时`;
+    document.getElementById('ratingDisplay').textContent = `评分 ${currentTutor.rating} ★`;
+    document.getElementById('experienceDisplay').textContent = currentTutor.experience;
+    document.getElementById('educationDisplay').textContent = currentTutor.education;
+    document.getElementById('modeDisplay').textContent = currentTutor.mode;
+    document.getElementById('subjectDisplay').textContent = currentTutor.subject;
+    document.getElementById('descriptionDisplay').textContent = currentTutor.description;
+    document.getElementById('experienceDetailDisplay').textContent = currentTutor.experienceDetail;
+    document.getElementById('educationDetailDisplay').textContent = currentTutor.educationDetail;
+    document.getElementById('subjectDetailDisplay').textContent = currentTutor.subjectDetail;
+    document.getElementById('modeDetailDisplay').textContent = currentTutor.modeDetail;
+    document.getElementById('ratingDetailDisplay').textContent = currentTutor.ratingDetail;
+    document.getElementById('casesDisplay').textContent = currentTutor.cases;
+    document.getElementById('fullDescriptionDisplay').textContent = currentTutor.fullDescription;
+    document.getElementById('priceDetailDisplay').textContent = `¥${currentTutor.price} / 小时`;
+    document.getElementById('availableTimeDisplay').textContent = currentTutor.availableTime;
+    document.getElementById('modeTimeDisplay').textContent = currentTutor.modeTime;
+    document.getElementById('serviceAreaDisplay').textContent = currentTutor.serviceArea;
+
+    // 预约该老师按钮
+    document.getElementById('bookBtn').addEventListener('click', () => {
+      // 构建跳转URL，传递老师信息
+      const params = new URLSearchParams({
+        tutorId: tutorId,
+        tutorName: currentTutor.name,
+        subject: currentTutor.subject,
+        price: currentTutor.price,
+        mode: currentTutor.mode
+      });
+      window.location.href = `./schedule-family.html?${params.toString()}`;
+    });
+
+    // 与老师沟通时间按钮
+    document.getElementById('contactBtn').addEventListener('click', () => {
+      alert('已发送沟通请求，老师会在 24 小时内回复！');
+    });
+  </script>
+</body>
+</html>
+

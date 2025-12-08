@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>家教管理系统 - 生源详情</title>
+  <style>
+    :root {
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: #181b2c;
+      background-color: #edf1fb;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      background: radial-gradient(circle at 20% 20%, #f5f8ff, #e4e8f6, #dfe3f2);
+    }
+    aside {
+      width: 268px;
+      background: #1e2445;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 32px 24px;
+      gap: 32px;
+    }
+    .brand {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    nav a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+    nav a.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+    main {
+      flex: 1;
+      padding: 40px 48px 56px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.92));
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      padding: 16px 24px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #5168ff, #7fa7ff);
+      color: #fff;
+      box-shadow: 0 18px 35px rgba(74, 96, 255, 0.25);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .back-link {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 30px 45px rgba(31, 45, 105, 0.12);
+      margin-bottom: 20px;
+    }
+    .card h2 {
+      margin: 0 0 16px;
+      font-size: 20px;
+      color: #262b3f;
+    }
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      color: #3b4154;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .info-label {
+      font-size: 13px;
+      color: #6a7190;
+    }
+    .info-value {
+      font-size: 15px;
+      color: #262b3f;
+      font-weight: 500;
+    }
+    .pill {
+      display: inline-flex;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: rgba(77, 111, 255, 0.12);
+      color: #4d5cff;
+      font-weight: 600;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+    .price-tag {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1f2a60;
+      margin: 12px 0;
+    }
+    .description {
+      color: #5a627f;
+      line-height: 1.6;
+      margin: 12px 0;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid #e3e6f3;
+    }
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 14px 24px;
+      font-size: 15px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(120deg, #4f6bff, #89b1ff);
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(65, 92, 255, 0.25);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(65, 92, 255, 0.35);
+    }
+    .btn-secondary {
+      background: rgba(77, 111, 255, 0.1);
+      color: #4d5cff;
+    }
+    .btn-secondary:hover {
+      background: rgba(77, 111, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <div class="brand">家教管理系统</div>
+    <nav>
+      <ul>
+        <li><a href="./dashboard.html">返回工作台</a></li>
+        <li><a href="./listing-tutor.html">生源列表</a></li>
+        <li><a href="./schedule-tutor.html">排课 / 调课</a></li>
+        <li><a href="#">今日课程</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main>
+    <header>
+      <div>
+        <a href="./listing-tutor.html" class="back-link">← 返回生源列表</a>
+        <h1>生源详情</h1>
+      </div>
+    </header>
+
+    <div class="card">
+      <h2>需求概览</h2>
+      <div class="price-tag" id="priceDisplay">¥320 / 小时</div>
+      <div style="margin: 16px 0;">
+        <span class="pill" id="gradeDisplay">高一</span>
+        <span class="pill" id="subjectDisplay">数学</span>
+        <span class="pill" id="modeDisplay">线下面授</span>
+        <span class="pill" id="areaDisplay">海淀区</span>
+      </div>
+      <h3 id="titleDisplay">高一数学冲刺 · 线下面授</h3>
+      <p class="description" id="descriptionDisplay">
+        需重点巩固函数与解析几何，目标 3 个月内提升 30 分。
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>家长需求详情</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">学生姓名</span>
+          <span class="info-value" id="studentNameDisplay">张同学</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">年级</span>
+          <span class="info-value" id="gradeDetailDisplay">高一</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">科目</span>
+          <span class="info-value" id="subjectDetailDisplay">数学</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">授课方式</span>
+          <span class="info-value" id="modeDetailDisplay">线下面授</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">期望时间</span>
+          <span class="info-value" id="timeDisplay">周末下午</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">学习目标</span>
+          <span class="info-value" id="goalDisplay">3 个月内提升 30 分</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>时间与价格信息</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">课时单价</span>
+          <span class="info-value" id="priceDetailDisplay">¥320 / 小时</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">每周课时</span>
+          <span class="info-value" id="weeklyHoursDisplay">2 小时</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">可授课时间</span>
+          <span class="info-value" id="availableTimeDisplay">周末下午、周三晚</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">课程时长</span>
+          <span class="info-value" id="durationDisplay">预计 3 个月</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>安全与地址</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">授课地址</span>
+          <span class="info-value" id="addressDisplay">海淀区中关村某小区（具体地址接单后提供）</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">安全认证</span>
+          <span class="info-value" style="color: #14935b;">✓ 已通过平台安全审核</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>操作区</h2>
+      <div class="action-buttons">
+        <button class="btn btn-primary" id="acceptBtn">接单并前往排课</button>
+        <button class="btn btn-secondary" id="favoriteBtn">加入收藏夹</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    /**
+     * 生源详情页面
+     * 功能：
+     * 1. 从URL参数获取生源ID并显示详情
+     * 2. 点击"接单并前往排课"按钮，跳转到排课页面并传递生源信息
+     */
+
+    // 从URL获取生源ID
+    const urlParams = new URLSearchParams(window.location.search);
+    const leadId = urlParams.get('id') || '1';
+
+    // 模拟生源数据（实际应从后端API获取）
+    const leadData = {
+      '1': {
+        title: '高一数学冲刺 · 线下面授',
+        grade: '高一',
+        subject: '数学',
+        mode: '线下面授',
+        area: '海淀区',
+        price: 320,
+        description: '需重点巩固函数与解析几何，目标 3 个月内提升 30 分。',
+        studentName: '张同学',
+        time: '周末下午',
+        goal: '3 个月内提升 30 分',
+        weeklyHours: '2 小时',
+        availableTime: '周末下午、周三晚',
+        duration: '预计 3 个月',
+        address: '海淀区中关村某小区（具体地址接单后提供）'
+      },
+      '2': {
+        title: '初二英语口语 · 线上',
+        grade: '初二',
+        subject: '英语',
+        mode: '线上',
+        area: '线上',
+        price: 220,
+        description: '希望提升口语表达与听力，偏向外教经验的老师。',
+        studentName: '李同学',
+        time: '每周 2 次',
+        goal: '提升口语和听力',
+        weeklyHours: '2 小时',
+        availableTime: '周一、周三晚 19:00-20:00',
+        duration: '预计 2 个月',
+        address: '线上授课'
+      },
+      '3': {
+        title: '六年级科学拓展 · 家访',
+        grade: '六年级',
+        subject: '科学',
+        mode: '线下面授',
+        area: '朝阳区',
+        price: 260,
+        description: '目标提前衔接初中科学，需提供实验兴趣培养方案。',
+        studentName: '王同学',
+        time: '周三晚',
+        goal: '提前衔接初中科学',
+        weeklyHours: '1.5 小时',
+        availableTime: '周三晚 19:00-20:30',
+        duration: '预计 4 个月',
+        address: '朝阳区某小区（具体地址接单后提供）'
+      }
+    };
+
+    // 获取当前生源数据
+    const currentLead = leadData[leadId] || leadData['1'];
+
+    // 填充页面数据
+    document.getElementById('titleDisplay').textContent = currentLead.title;
+    document.getElementById('priceDisplay').textContent = `¥${currentLead.price} / 小时`;
+    document.getElementById('gradeDisplay').textContent = currentLead.grade;
+    document.getElementById('subjectDisplay').textContent = currentLead.subject;
+    document.getElementById('modeDisplay').textContent = currentLead.mode;
+    document.getElementById('areaDisplay').textContent = currentLead.area;
+    document.getElementById('descriptionDisplay').textContent = currentLead.description;
+    document.getElementById('studentNameDisplay').textContent = currentLead.studentName;
+    document.getElementById('gradeDetailDisplay').textContent = currentLead.grade;
+    document.getElementById('subjectDetailDisplay').textContent = currentLead.subject;
+    document.getElementById('modeDetailDisplay').textContent = currentLead.mode;
+    document.getElementById('timeDisplay').textContent = currentLead.time;
+    document.getElementById('goalDisplay').textContent = currentLead.goal;
+    document.getElementById('priceDetailDisplay').textContent = `¥${currentLead.price} / 小时`;
+    document.getElementById('weeklyHoursDisplay').textContent = currentLead.weeklyHours;
+    document.getElementById('availableTimeDisplay').textContent = currentLead.availableTime;
+    document.getElementById('durationDisplay').textContent = currentLead.duration;
+    document.getElementById('addressDisplay').textContent = currentLead.address;
+
+    // 接单并前往排课按钮
+    document.getElementById('acceptBtn').addEventListener('click', () => {
+      // 构建跳转URL，传递生源信息
+      const params = new URLSearchParams({
+        leadId: leadId,
+        studentName: currentLead.studentName,
+        subject: currentLead.subject,
+        grade: currentLead.grade,
+        mode: currentLead.mode,
+        price: currentLead.price
+      });
+      window.location.href = `./schedule-tutor.html?${params.toString()}`;
+    });
+
+    // 加入收藏夹按钮
+    document.getElementById('favoriteBtn').addEventListener('click', () => {
+      alert('已加入收藏夹！');
+    });
+  </script>
+</body>
+</html>
+

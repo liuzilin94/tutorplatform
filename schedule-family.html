@@ -205,15 +205,16 @@
             <div class="form-grid">
               <div>
                 <label>选择老师</label>
-                <select>
+                <select id="tutorSelect">
                   <option>请选择</option>
                   <option>李晓雪 · 高中数学</option>
                   <option>王晨 · 初中英语</option>
+                  <option>赵静 · 小学语文</option>
                 </select>
               </div>
               <div>
                 <label>授课科目</label>
-                <select>
+                <select id="subjectSelect">
                   <option>数学</option>
                   <option>英语</option>
                   <option>语文</option>
@@ -221,15 +222,15 @@
               </div>
               <div>
                 <label>日期</label>
-                <input type="date" />
+                <input type="date" id="dateInput" />
               </div>
               <div>
                 <label>时间段</label>
-                <input type="time" /> - <input type="time" />
+                <input type="time" id="timeStartInput" /> - <input type="time" id="timeEndInput" />
               </div>
               <div>
                 <label>授课方式</label>
-                <select>
+                <select id="modeSelect">
                   <option>线上</option>
                   <option>线下 · 家访</option>
                 </select>
@@ -332,6 +333,56 @@
         </aside>
       </section>
     </main>
+
+    <script>
+      /**
+       * 预约页面：从URL参数预填充表单
+       * 当从老师详情页点击"预约该老师"时，会自动填充相关信息
+       */
+      const urlParams = new URLSearchParams(window.location.search);
+      
+      // 如果有URL参数，预填充表单
+      if (urlParams.has('tutorId')) {
+        const tutorName = urlParams.get('tutorName') || '';
+        const subject = urlParams.get('subject') || '';
+        const mode = urlParams.get('mode') || '';
+        
+        // 填充老师选择
+        const tutorSelect = document.getElementById('tutorSelect');
+        for (let i = 0; i < tutorSelect.options.length; i++) {
+          if (tutorSelect.options[i].text.includes(tutorName.split(' · ')[0])) {
+            tutorSelect.selectedIndex = i;
+            break;
+          }
+        }
+        
+        // 填充科目
+        const subjectSelect = document.getElementById('subjectSelect');
+        for (let i = 0; i < subjectSelect.options.length; i++) {
+          if (subjectSelect.options[i].text === subject) {
+            subjectSelect.selectedIndex = i;
+            break;
+          }
+        }
+        
+        // 填充授课方式
+        const modeSelect = document.getElementById('modeSelect');
+        if (mode.includes('线下')) {
+          modeSelect.selectedIndex = 1; // 选择"线下 · 家访"
+        } else {
+          modeSelect.selectedIndex = 0; // 选择"线上"
+        }
+        
+        // 设置默认日期为明天
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById('dateInput').value = tomorrow.toISOString().split('T')[0];
+        
+        // 设置默认时间段为 19:00-20:30
+        document.getElementById('timeStartInput').value = '19:00';
+        document.getElementById('timeEndInput').value = '20:30';
+      }
+    </script>
   </body>
 </html>
 
