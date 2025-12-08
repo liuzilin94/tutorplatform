@@ -2,95 +2,17 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=./auth.html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>家教管理系统</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-      background: linear-gradient(135deg, #4d6fff, #6ac6ff);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      color: #fff;
-    }
-    .loading-container {
-      text-align: center;
-    }
-    .spinner {
-      border: 4px solid rgba(255, 255, 255, 0.3);
-      border-top: 4px solid #fff;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 20px;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .loading-text {
-      font-size: 16px;
-      opacity: 0.9;
-    }
-  </style>
+  <title>家教管理系统 - 登录</title>
+  <script>
+    // 立即跳转到登录页面
+    window.location.href = './auth.html';
+  </script>
 </head>
 <body>
-  <div class="loading-container">
-    <div class="spinner"></div>
-    <div class="loading-text">正在加载...</div>
-  </div>
-
-  <script>
-    /**
-     * 入口文件：检查用户登录状态并自动跳转
-     * 
-     * 逻辑说明：
-     * 1. 检查 localStorage 中是否存储了用户信息（userInfo）
-     * 2. 如果已登录，根据用户角色跳转到对应的工作台
-     * 3. 如果未登录，跳转到登录页面
-     */
-
-    // 获取存储的用户信息
-    const userInfo = localStorage.getItem('userInfo');
-    
-    // 延迟一下，让加载动画显示出来
-    setTimeout(() => {
-      if (userInfo) {
-        try {
-          // 解析用户信息
-          const user = JSON.parse(userInfo);
-          const role = user.role;
-          
-          // 根据角色跳转到对应的工作台
-          if (role === 'tutor') {
-            // 老师角色 -> 老师端工作台
-            window.location.href = './dashboard.html';
-          } else if (role === 'student' || role === 'parent') {
-            // 学生或家长角色 -> 学生/家长端工作台
-            window.location.href = './dashboard-family.html';
-          } else if (role === 'admin') {
-            // 管理者角色 -> 暂时跳转到老师端（后续可以创建专门的管理者工作台）
-            window.location.href = './dashboard.html';
-          } else {
-            // 未知角色，跳转到登录页
-            window.location.href = './auth.html';
-          }
-        } catch (e) {
-          // 解析失败，清除无效数据并跳转到登录页
-          console.error('用户信息解析失败:', e);
-          localStorage.removeItem('userInfo');
-          window.location.href = './auth.html';
-        }
-      } else {
-        // 未登录，跳转到登录页
-        window.location.href = './auth.html';
-      }
-    }, 500); // 延迟 500ms，让加载动画显示
-  </script>
+  <p>正在跳转到登录页面...</p>
+  <p>如果页面没有自动跳转，请 <a href="./auth.html">点击这里</a></p>
 </body>
 </html>
 
