@@ -220,14 +220,96 @@
     </div>
 
     <script>
+      /**
+       * 注册页面交互逻辑
+       */
       const roleGroup = document.getElementById("roleGroup");
       const degreeUpload = document.getElementById("degreeUpload");
+      const API_BASE_URL = 'http://localhost:3000/api'; // 后端 API 地址
+
+      // 角色选择时显示/隐藏学历证明上传区域
       roleGroup.addEventListener("change", (e) => {
         if (e.target.name !== "role") return;
         roleGroup
           .querySelectorAll(".role-card")
           .forEach((card) => card.classList.toggle("active", card.contains(e.target)));
         degreeUpload.hidden = e.target.value !== "tutor";
+      });
+
+      // 注册表单提交处理
+      const form = document.querySelector('form');
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const role = document.querySelector('input[name="role"]:checked').value;
+        const name = document.getElementById("reg-name").value;
+        const phone = document.getElementById("reg-phone").value;
+        const password = document.getElementById("reg-password").value;
+        const email = document.getElementById("reg-email").value;
+
+        if (!name || !phone || !password) {
+          alert('请填写必填项（姓名、手机号、密码）');
+          return;
+        }
+
+        try {
+          // 调用后端注册 API
+          const response = await fetch(`${API_BASE_URL}/auth/register`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+              phone, 
+              password, 
+              role, 
+              name,
+              email: email || undefined 
+            }),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            // 注册失败，显示错误信息
+            alert(data.message || '注册失败，请检查输入信息');
+            return;
+          }
+
+          // 注册成功，保存用户信息到 localStorage
+          const userInfo = {
+            id: data.id,
+            phone: data.phone,
+            role: data.role,
+            name: data.name || name,
+          };
+          localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+          // 根据角色跳转到对应的工作台
+          const targetUrl = role === "tutor" 
+            ? "./dashboard.html" 
+            : "./dashboard-family.html";
+          alert('注册成功！');
+          window.location.href = targetUrl;
+
+        } catch (error) {
+          console.error('注册请求失败:', error);
+          // 如果后端未启动或网络错误，使用模拟注册（仅用于开发测试）
+          console.warn('后端连接失败，使用模拟注册');
+          const userInfo = {
+            id: 'mock_' + Date.now(),
+            phone: phone,
+            role: role,
+            name: name,
+          };
+          localStorage.setItem('userInfo', JSON.stringify(userInfo));
+          
+          alert('注册成功！（模拟模式）');
+          const targetUrl = role === "tutor" 
+            ? "./dashboard.html" 
+            : "./dashboard-family.html";
+          window.location.href = targetUrl;
+        }
       });
     </script>
   </body>

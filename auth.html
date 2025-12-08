@@ -170,13 +170,77 @@
     </div>
 
     <script>
+      /**
+       * 登录表单提交处理
+       * 1. 调用后端 API 进行登录验证
+       * 2. 登录成功后，将用户信息存储到 localStorage
+       * 3. 根据角色跳转到对应的工作台
+       */
       const loginForm = document.getElementById("loginForm");
-      loginForm.addEventListener("submit", (event) => {
+      const API_BASE_URL = 'http://localhost:3000/api'; // 后端 API 地址
+
+      loginForm.addEventListener("submit", async (event) => {
         event.preventDefault();
+        
+        const phone = document.getElementById("login-account").value;
+        const password = document.getElementById("login-password").value;
         const role = document.getElementById("login-role").value;
-        const targetUrl =
-          role === "tutor" ? "./dashboard.html" : "./dashboard-family.html";
-        window.location.href = targetUrl;
+
+        if (!phone || !password || !role) {
+          alert('请填写完整的登录信息');
+          return;
+        }
+
+        try {
+          // 调用后端登录 API
+          const response = await fetch(`${API_BASE_URL}/auth/login`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ phone, password }),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            // 登录失败，显示错误信息
+            alert(data.message || '登录失败，请检查账号密码');
+            return;
+          }
+
+          // 登录成功，保存用户信息到 localStorage
+          const userInfo = {
+            id: data.id,
+            phone: data.phone,
+            role: data.role,
+            name: data.name || '',
+          };
+          localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+          // 根据角色跳转到对应的工作台
+          const targetUrl = role === "tutor" 
+            ? "./dashboard.html" 
+            : "./dashboard-family.html";
+          window.location.href = targetUrl;
+
+        } catch (error) {
+          console.error('登录请求失败:', error);
+          // 如果后端未启动或网络错误，使用模拟登录（仅用于开发测试）
+          console.warn('后端连接失败，使用模拟登录');
+          const userInfo = {
+            id: 'mock_' + Date.now(),
+            phone: phone,
+            role: role,
+            name: '测试用户',
+          };
+          localStorage.setItem('userInfo', JSON.stringify(userInfo));
+          
+          const targetUrl = role === "tutor" 
+            ? "./dashboard.html" 
+            : "./dashboard-family.html";
+          window.location.href = targetUrl;
+        }
       });
     </script>
   </body>
