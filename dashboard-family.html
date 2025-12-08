@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>家教管理系统 - 学生 / 家长工作台</title>
+    <style>
+      :root {
+        font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        color: #181b2c;
+        background-color: #edf1fb;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        background: radial-gradient(circle at 20% 20%, #f5f8ff, #e4e8f6, #dfe3f2);
+      }
+      aside {
+        width: 268px;
+        background: #1e2445;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        padding: 32px 24px;
+        gap: 32px;
+      }
+      .brand {
+        font-size: 20px;
+        font-weight: 600;
+      }
+      .profile-card {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 16px;
+        border-radius: 16px;
+        text-align: center;
+      }
+      .profile-card img {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        margin-bottom: 12px;
+      }
+      nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      nav a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        padding: 10px 12px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+      }
+      nav a.active {
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+      }
+      main {
+        flex: 1;
+        padding: 40px 48px 56px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.92));
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+        padding: 16px 24px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #5168ff, #7fa7ff);
+        color: #fff;
+        box-shadow: 0 18px 35px rgba(74, 96, 255, 0.25);
+      }
+      header h1 {
+        margin: 0;
+        font-size: 26px;
+      }
+      .badge {
+        background: rgba(255, 255, 255, 0.18);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 999px;
+        font-size: 13px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 24px;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 22px;
+        padding: 26px;
+        box-shadow: 0 30px 45px rgba(31, 45, 105, 0.12);
+        backdrop-filter: blur(6px);
+      }
+      .card h2 {
+        margin: 0 0 14px;
+        font-size: 18px;
+      }
+      .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+      }
+      .action-tile {
+        border: 1px solid rgba(82, 97, 150, 0.12);
+        border-radius: 16px;
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        background: linear-gradient(180deg, rgba(247, 249, 255, 0.95), rgba(236, 240, 253, 0.95));
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .action-tile:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 30px rgba(59, 70, 140, 0.15);
+      }
+      .action-tile strong {
+        font-size: 15px;
+      }
+      .list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .list li {
+        padding: 14px 0;
+        border-bottom: 1px solid #eef0f7;
+      }
+      .list li:last-child {
+        border-bottom: none;
+      }
+      .pill {
+        display: inline-flex;
+        padding: 5px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        background: rgba(77, 111, 255, 0.12);
+        color: #4d5cff;
+        font-weight: 600;
+      }
+      .stats-block {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .stats-card {
+        flex: 1;
+        background: #f8faff;
+        border-radius: 14px;
+        padding: 18px;
+      }
+      @media (max-width: 1024px) {
+        body {
+          flex-direction: column;
+        }
+        aside {
+          width: 100%;
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+        main {
+          padding: 24px;
+        }
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <aside>
+      <div class="brand">家教管理系统</div>
+      <div class="profile-card">
+        <img src="https://placehold.co/96x96" alt="Family Avatar" />
+        <div style="font-size: 16px; font-weight: 600">陈同学（家长）</div>
+        <small>年级：高一 · 目标：冲刺重点</small>
+      </div>
+      <nav>
+        <ul>
+          <li><a class="active" href="#">首页概览</a></li>
+          <li><a href="#">发布/管理需求 <span class="badge">2</span></a></li>
+          <li><a href="./listing-family.html">家教推荐</a></li>
+          <li><a href="./schedule-family.html">预约课程</a></li>
+          <li><a href="#">支付与账单</a></li>
+          <li><a href="#">消息中心 <span class="badge">3</span></a></li>
+          <li><a href="#">个人资料</a></li>
+        </ul>
+      </nav>
+      <div style="font-size: 13px; color: rgba(255, 255, 255, 0.7)">
+        服务顾问：刘老师<br />工作日 9:00-18:00 在线
+      </div>
+    </aside>
+
+    <main>
+      <header>
+        <div>
+          <h1>学生 / 家长工作台</h1>
+          <p style="margin: 6px 0 0; color: rgba(255, 255, 255, 0.8)">
+            管理需求、预约课程、跟进支付与反馈
+          </p>
+        </div>
+        <span class="badge">账号状态：正常使用</span>
+      </header>
+
+      <div class="grid">
+        <div>
+          <div class="card">
+            <h2>推荐与预约</h2>
+            <div class="quick-actions">
+              <a class="action-tile" href="./listing-family.html" style="text-decoration: none; color: inherit;">
+                <strong>家教推荐</strong>
+                <span>根据数学·高一需求匹配 4 位老师</span>
+                <small class="pill">查看推荐</small>
+              </a>
+              <a class="action-tile" href="./schedule-family.html" style="text-decoration: none; color: inherit;">
+                <strong>预约课程</strong>
+                <span>本周末可预约 6 个空档</span>
+                <small class="pill">立即预约</small>
+              </a>
+              <div class="action-tile">
+                <strong>课程包管理</strong>
+                <span>当前套餐剩余 8 课时</span>
+                <small class="pill">快速续课</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>我的课程</h2>
+            <ul class="list">
+              <li>
+                <strong>高一·数学进阶课</strong>
+                <p style="margin: 4px 0; color: #5a627f">今日 19:00 开课，支持一键签到</p>
+                <small class="pill">进入课堂</small>
+              </li>
+              <li>
+                <strong>英语口语体验课</strong>
+                <p style="margin: 4px 0; color: #5a627f">已预约 12/08 20:00，待老师确认</p>
+                <small class="pill">查看详情</small>
+              </li>
+              <li>
+                <strong>历史专题答疑</strong>
+                <p style="margin: 4px 0; color: #5a627f">课程已完成，待填写评价</p>
+                <small class="pill">立即评价</small>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <aside class="card" style="display: flex; flex-direction: column; gap: 24px">
+          <div>
+            <h2 style="color: #262b3f;">通知与提醒</h2>
+            <ul class="list">
+              <li>
+                <strong style="color: #262b3f;">待处理支付</strong>
+                <p style="margin: 4px 0; color: #5a627f">上周课程补款 300 元待完成</p>
+              </li>
+              <li>
+                <strong style="color: #262b3f;">课程反馈</strong>
+                <p style="margin: 4px 0; color: #5a627f">2 条老师反馈更新，点击查看</p>
+              </li>
+              <li>
+                <strong style="color: #262b3f;">调课申请结果</strong>
+                <p style="margin: 4px 0; color: #5a627f">英语课程调课已通过，可重新预约</p>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 style="color: #262b3f;">学习进度</h2>
+            <div class="stats-block">
+              <div class="stats-card">
+                <small style="color: #5a627f">本月完成</small>
+                <div style="font-size: 24px; font-weight: 600;color: #262b3f;">12 课时</div>
+              </div>
+              <div class="stats-card">
+                <small style="color: #5a627f">目标完成度</small>
+                <div style="font-size: 24px; font-weight: 600;color: #262b3f;">80%</div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h2 style="color: #262b3f;" >快捷入口</h2>
+            <div class="quick-actions">
+              <div class="action-tile" style="color: #262b3f;">发布新需求</div>
+              <div class="action-tile" style="color: #262b3f;">查看支付记录</div>
+              <div class="action-tile" style="color: #262b3f;">联系客服</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </body>
+</html>
+

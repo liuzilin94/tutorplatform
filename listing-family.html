@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>家教管理系统 - 家教推荐</title>
+    <style>
+      :root {
+        font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        color: #181b2c;
+        background-color: #edf1fb;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        background: radial-gradient(circle at 20% 20%, #f5f8ff, #e4e8f6, #dfe3f2);
+      }
+      aside {
+        width: 268px;
+        background: #1e2445;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        padding: 32px 24px;
+        gap: 32px;
+      }
+      .brand {
+        font-size: 20px;
+        font-weight: 600;
+      }
+      nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      nav a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        padding: 10px 12px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+      }
+      nav a.active {
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+      }
+      main {
+        flex: 1;
+        padding: 40px 48px 56px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.92));
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+        padding: 16px 24px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #5168ff, #7fa7ff);
+        color: #fff;
+        box-shadow: 0 18px 35px rgba(74, 96, 255, 0.25);
+      }
+      header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+      .filters {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      select,
+      input {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 14px;
+        border: 1px solid rgba(82, 97, 150, 0.2);
+        background: rgba(255, 255, 255, 0.9);
+        font-size: 14px;
+        box-shadow: 0 10px 20px rgba(33, 46, 104, 0.08);
+      }
+      .filter-actions {
+        display: flex;
+        gap: 12px;
+      }
+      .btn {
+        border: none;
+        border-radius: 12px;
+        padding: 12px 18px;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .btn-primary {
+        background: linear-gradient(120deg, #4f6bff, #89b1ff);
+        color: #fff;
+        box-shadow: 0 12px 24px rgba(65, 92, 255, 0.25);
+      }
+      .btn-text {
+        background: transparent;
+        color: #4d5cff;
+      }
+      .result-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 22px;
+        padding: 22px;
+        box-shadow: 0 26px 44px rgba(27, 39, 92, 0.12);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .card h3 {
+        margin: 0;
+        font-size: 18px;
+        color: #262b3f;
+      }
+      .meta {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .pill {
+        padding: 5px 12px;
+        border-radius: 999px;
+        background: rgba(77, 111, 255, 0.12);
+        color: #4d5cff;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 8px;
+      }
+      .price {
+        font-size: 20px;
+        font-weight: 600;
+        color: #1f2a60;
+      }
+      .primary-link {
+        color: #4d5cff;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .rating {
+        color: #f5a623;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <aside>
+      <div class="brand">家教管理系统</div>
+      <nav>
+        <ul>
+          <li><a href="./dashboard-family.html">返回工作台</a></li>
+          <li><a class="active" href="#">家教推荐</a></li>
+          <li><a href="./schedule-family.html">预约课程</a></li>
+          <li><a href="#">支付与账单</a></li>
+        </ul>
+      </nav>
+      <div style="font-size: 13px; color: rgba(255, 255, 255, 0.7)">
+        提示：完成课程偏好填写，可获得更精准推荐
+      </div>
+    </aside>
+
+    <main>
+      <header>
+        <div>
+          <h1>家教推荐列表</h1>
+          <p style="margin: 6px 0 0; color: rgba(255, 255, 255, 0.8)">
+            按科目、经验、价格、评分筛选老师，查看详情并预约
+          </p>
+        </div>
+        <span>为您匹配 12 位老师</span>
+      </header>
+
+      <section>
+        <div class="filters">
+          <select>
+            <option>科目：全部</option>
+            <option>语文</option>
+            <option>数学</option>
+            <option>英语</option>
+            <option>物理</option>
+          </select>
+          <select>
+            <option>年级：全部</option>
+            <option>小学</option>
+            <option>初中</option>
+            <option>高中</option>
+          </select>
+          <select>
+            <option>经验：不限</option>
+            <option>1-3 年</option>
+            <option>3-5 年</option>
+            <option>5 年以上</option>
+          </select>
+          <select>
+            <option>价格：不限</option>
+            <option>≤200 元/时</option>
+            <option>200-400 元/时</option>
+            <option>≥400 元/时</option>
+          </select>
+          <select>
+            <option>授课方式</option>
+            <option>线上</option>
+            <option>线下</option>
+          </select>
+          <div class="filter-actions">
+            <button class="btn btn-primary">应用筛选</button>
+            <button class="btn btn-text">重置</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="result-grid">
+        <article class="card">
+          <h3>李晓雪 · 高中数学</h3>
+          <div class="meta">
+            <span class="pill">5 年经验</span>
+            <span class="pill">985 本科</span>
+            <span class="pill">线下面授</span>
+          </div>
+          <p style="margin: 6px 0; color: #5a627f">
+            擅长高三冲刺与函数专题，曾辅导 20+ 学生斩获 130+ 高分。
+          </p>
+          <div class="footer">
+            <div>
+              <span class="price">¥420 / 小时</span>
+              <div class="rating">评分 4.9 ★</div>
+            </div>
+            <a class="primary-link" href="#">预约沟通</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>王晨 · 初中英语</h3>
+          <div class="meta">
+            <span class="pill">3 年经验</span>
+            <span class="pill">海外硕士</span>
+            <span class="pill">线上授课</span>
+          </div>
+          <p style="margin: 6px 0; color: #5a627f">
+            主攻口语听力，提供定制教材与录音反馈，适合提升表达能力。
+          </p>
+          <div class="footer">
+            <div>
+              <span class="price">¥260 / 小时</span>
+              <div class="rating">评分 4.8 ★</div>
+            </div>
+            <a class="primary-link" href="#">查看详情</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>赵静 · 小学语文</h3>
+          <div class="meta">
+            <span class="pill">8 年经验</span>
+            <span class="pill">教研认证</span>
+            <span class="pill">线下上门</span>
+          </div>
+          <p style="margin: 6px 0; color: #5a627f">
+            善于激发阅读兴趣，结合作文点评与阅读计划双线提升。
+          </p>
+          <div class="footer">
+            <div>
+              <span class="price">¥300 / 小时</span>
+              <div class="rating">评分 4.7 ★</div>
+            </div>
+            <a class="primary-link" href="#">立即预约</a>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
+

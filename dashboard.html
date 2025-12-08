@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>家教管理系统 - 老师工作台</title>
+    <style>
+      :root {
+        font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        color: #181b2c;
+        background-color: #edf1fb;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        background: radial-gradient(circle at 20% 20%, #f5f8ff, #e4e8f6, #dfe3f2);
+      }
+      aside {
+        width: 268px;
+        background: #1e2445;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        padding: 32px 24px;
+        gap: 32px;
+      }
+      .brand {
+        font-size: 20px;
+        font-weight: 600;
+      }
+      .profile-card {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 16px;
+        border-radius: 16px;
+        text-align: center;
+      }
+      .profile-card img {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        margin-bottom: 12px;
+      }
+      nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      nav a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        padding: 10px 12px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+      }
+      nav a.active {
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+      }
+      main {
+        flex: 1;
+        padding: 40px 48px 56px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.92));
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+        padding: 16px 24px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #5168ff, #7fa7ff);
+        color: #fff;
+        box-shadow: 0 18px 35px rgba(74, 96, 255, 0.25);
+      }
+      header h1 {
+        margin: 0;
+        font-size: 26px;
+      }
+      .badge {
+        background: rgba(255, 255, 255, 0.18);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 999px;
+        font-size: 13px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 24px;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 22px;
+        padding: 26px;
+        box-shadow: 0 30px 45px rgba(31, 45, 105, 0.12);
+        backdrop-filter: blur(6px);
+      }
+      .card h2 {
+        margin: 0 0 14px;
+        font-size: 18px;
+      }
+      .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 16px;
+      }
+      .action-tile {
+        border: 1px solid rgba(82, 97, 150, 0.12);
+        border-radius: 16px;
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        background: linear-gradient(180deg, rgba(247, 249, 255, 0.95), rgba(236, 240, 253, 0.95));
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .action-tile:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 30px rgba(59, 70, 140, 0.15);
+      }
+      .action-tile strong {
+        font-size: 15px;
+      }
+      .list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .list li {
+        padding: 14px 0;
+        border-bottom: 1px solid #eef0f7;
+      }
+      .list li:last-child {
+        border-bottom: none;
+      }
+      .pill {
+        display: inline-flex;
+        padding: 5px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        background: rgba(77, 111, 255, 0.12);
+        color: #4d5cff;
+        font-weight: 600;
+      }
+      @media (max-width: 1024px) {
+        body {
+          flex-direction: column;
+        }
+        aside {
+          width: 100%;
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+        main {
+          padding: 24px;
+        }
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <aside>
+      <div class="brand">家教管理系统</div>
+      <div class="profile-card">
+        <img src="https://placehold.co/96x96" alt="Tutor Avatar" />
+        <div style="font-size: 16px; font-weight: 600">赵老师</div>
+        <small>数学 · 高级讲师</small>
+      </div>
+      <nav>
+        <ul>
+          <li><a class="active" href="#">首页概览</a></li>
+          <li><a href="./listing-tutor.html">生源列表 <span class="badge">5</span></a></li>
+          <li><a href="#">今日课程</a></li>
+          <li><a href="./schedule-tutor.html">排课 / 调课</a></li>
+          <li><a href="#">收益与结算</a></li>
+          <li><a href="#">资质审核状态</a></li>
+        </ul>
+      </nav>
+      <div style="font-size: 13px; color: rgba(255, 255, 255, 0.7)">
+        教学支持：李老师<br />08:30-22:00 在线
+      </div>
+    </aside>
+
+    <main>
+      <header>
+        <div>
+          <h1>老师工作台</h1>
+          <p style="margin: 6px 0 0; color: rgba(255, 255, 255, 0.8)">
+            同步掌握生源、课程排期与关键提醒
+          </p>
+        </div>
+        <span class="badge">今日课程 3 节 · 待办 2 项</span>
+      </header>
+
+      <div class="grid">
+        <div>
+          <div class="card">
+            <h2>快捷入口</h2>
+            <div class="quick-actions">
+              <a class="action-tile" href="./listing-tutor.html" style="text-decoration: none; color: inherit;">
+                <strong>生源列表</strong>
+                <span>新增 5 条需求待抢</span>
+                <small class="pill">前往抢单</small>
+              </a>
+              <div class="action-tile">
+                <strong>今日课程</strong>
+                <span>14:00 数学冲刺冲突提醒</span>
+                <small class="pill">查看日程</small>
+              </div>
+              <a class="action-tile" href="./schedule-tutor.html" style="text-decoration: none; color: inherit;">
+                <strong>排课 / 调课</strong>
+                <span>1 条调课申请待处理</span>
+                <small class="pill">立即处理</small>
+              </a>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>待处理事项</h2>
+            <ul class="list">
+              <li>
+                <strong>语文·初三（线上）</strong>
+                <p style="margin: 4px 0; color: #5a627f">2 小时内确认是否接单</p>
+                <small class="pill">查看需求</small>
+              </li>
+              <li>
+                <strong>数学·高一（线下）</strong>
+                <p style="margin: 4px 0; color: #5a627f">家长发起调课，待审批</p>
+                <small class="pill">审批调课</small>
+              </li>
+              <li>
+                <strong>“家长点评”待回复</strong>
+                <p style="margin: 4px 0; color: #5a627f">课程完成 24h 内需反馈</p>
+                <small class="pill">去回复</small>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <aside class="card" style="display: flex; flex-direction: column; gap: 24px">
+          <div>
+            <h2 style="color: #262b3f;">关键提醒</h2>
+            <ul class="list">
+              <li>
+                <strong style="color: #262b3f;">资质证书有效期</strong>
+                <p style="margin: 4px 0; color: #5a627f">学历证明 15 天后到期</p>
+              </li>
+              <li>
+                <strong style="color: #262b3f;">打卡异常处理</strong>
+                <p style="margin: 4px 0; color: #5a627f">2 条打卡待补录</p>
+              </li>
+              <li>
+                <strong style="color: #262b3f;">待审核资质</strong>
+                <p style="margin: 4px 0; color: #5a627f">教研部反馈预计 12 小时内完成</p>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 style="color: #262b3f;">数据概览</h2>
+            <div class="quick-actions" style="grid-template-columns: 1fr 1fr">
+              <div class="action-tile">
+                <small style="color: #262b3f; font-weight: 500">本周已完成</small>
+                <strong style="color: #262b3f;font-size: 24px">9 节</strong>
+              </div>
+              <div class="action-tile">
+                <small style="color: #262b3f; font-weight: 500">本月预计收入</small>
+                <strong style="color: #262b3f;font-size: 24px">¥8,200</strong>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h2>协作入口</h2>
+            <div class="quick-actions">
+              <div class="action-tile" style="color: #262b3f;">发布空闲时间</div>
+              <div class="action-tile" style="color: #262b3f;">联络教务</div>
+              <div class="action-tile" style="color: #262b3f;">查看操作日志</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </body>
+</html>
+

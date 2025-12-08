@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>家教管理系统 - 老师课程管理</title>
+    <style>
+      :root {
+        font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        color: #181b2c;
+        background-color: #edf1fb;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        background: radial-gradient(circle at 20% 20%, #f5f8ff, #e4e8f6, #dfe3f2);
+      }
+      aside {
+        width: 268px;
+        background: #1e2445;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        padding: 32px 24px;
+        gap: 32px;
+      }
+      .brand {
+        font-size: 20px;
+        font-weight: 600;
+      }
+      nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      nav a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        padding: 10px 12px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+      }
+      nav a.active {
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+      }
+      main {
+        flex: 1;
+        padding: 40px 48px 56px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.92));
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+        padding: 16px 24px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #5168ff, #7fa7ff);
+        color: #fff;
+        box-shadow: 0 18px 35px rgba(74, 96, 255, 0.25);
+      }
+      header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+      .badge {
+        background: rgba(255, 255, 255, 0.18);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 999px;
+        font-size: 13px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 24px;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 22px;
+        padding: 24px;
+        box-shadow: 0 30px 45px rgba(31, 45, 105, 0.12);
+        backdrop-filter: blur(6px);
+      }
+      .card h2 {
+        margin: 0 0 12px;
+        font-size: 18px;
+      }
+      .card h3 {
+        margin: 0 0 8px;
+        font-size: 16px;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 14px;
+        margin: 8px 0 16px;
+      }
+      label {
+        display: block;
+        font-size: 13px;
+        margin-bottom: 4px;
+        color: #4a4f66;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(82, 97, 150, 0.2);
+        background: rgba(255, 255, 255, 0.98);
+        font-size: 14px;
+      }
+      .btn {
+        border: none;
+        border-radius: 12px;
+        padding: 10px 18px;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .btn-primary {
+        background: linear-gradient(120deg, #4f6bff, #89b1ff);
+        color: #fff;
+        box-shadow: 0 12px 24px rgba(65, 92, 255, 0.25);
+      }
+      .btn-text {
+        background: transparent;
+        color: #4d5cff;
+      }
+      .pill {
+        display: inline-flex;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        background: rgba(255, 149, 0, 0.1);
+        color: #c7741a;
+        font-weight: 600;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        margin-top: 8px;
+      }
+      th,
+      td {
+        padding: 8px 10px;
+        border-bottom: 1px solid #e3e6f3;
+        text-align: left;
+      }
+      th {
+        color: #6a7190;
+        font-weight: 500;
+      }
+      .danger {
+        color: #d0342c;
+        font-weight: 600;
+      }
+      .safe-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 16px;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        background: linear-gradient(120deg, #18b87a, #41d39a);
+        color: #fff;
+        font-weight: 600;
+        font-size: 13px;
+      }
+      .safe-status {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        background: rgba(24, 184, 122, 0.08);
+        color: #14935b;
+      }
+    </style>
+  </head>
+  <body>
+    <aside>
+      <div class="brand">家教管理系统</div>
+      <nav>
+        <ul>
+          <li><a href="./dashboard.html">返回工作台</a></li>
+          <li><a href="./listing-tutor.html">生源列表</a></li>
+          <li><a class="active" href="#">课程管理 / 排课</a></li>
+          <li><a href="#">今日课程</a></li>
+        </ul>
+      </nav>
+      <div style="font-size: 13px; color: rgba(0, 0, 0, 0.7)">
+        提示：线下课程请务必完成安全打卡
+      </div>
+    </aside>
+
+    <main>
+      <header>
+        <div>
+          <h1>课程管理与排课</h1>
+          <p style="margin: 6px 0 0; color: rgba(0, 0, 0, 0.8)">
+            创建课程、查看日程冲突，并完成线下课程安全打卡
+          </p>
+        </div>
+        <span class="badge">今日 3 节课 · 1 条冲突提醒</span>
+      </header>
+
+      <section class="grid">
+        <div class="card">
+          <h2>新增 / 调整课程</h2>
+          <div class="form-grid">
+            <div>
+              <label>选择生源</label>
+              <select>
+                <option>请选择</option>
+                <option>高一数学冲刺 · 张同学</option>
+                <option>初二英语口语 · 李同学</option>
+              </select>
+            </div>
+            <div>
+              <label>授课科目</label>
+              <select>
+                <option>数学</option>
+                <option>英语</option>
+                <option>语文</option>
+              </select>
+            </div>
+            <div>
+              <label>日期</label>
+              <input type="date" />
+            </div>
+            <div>
+              <label>时间段</label>
+              <input type="time" /> 
+            </div>
+            <div>
+              <label>授课方式</label>
+              <select>
+                <option>线上</option>
+                <option>线下 · 家访</option>
+              </select>
+            </div>
+            <div>
+              <label>授课地址（线下）</label>
+              <input type="text" placeholder="如：海淀区中关村某小区" />
+            </div>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: center">
+            <button class="btn btn-primary">保存排课</button>
+            <button class="btn btn-text">提交调课申请</button>
+            <span class="pill">检测到 14:00 与现有课程时间冲突</span>
+          </div>
+
+          <div style="margin-top: 20px">
+            <h3>本周课程表（概览）</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>日期</th>
+                  <th>时间</th>
+                  <th>学生 / 科目</th>
+                  <th>方式</th>
+                  <th>状态</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>周三</td>
+                  <td>14:00-15:30</td>
+                  <td>张同学 · 高一数学</td>
+                  <td>线下 · 家访</td>
+                  <td class="danger">时间冲突</td>
+                </tr>
+                <tr>
+                  <td>周三</td>
+                  <td>19:00-20:30</td>
+                  <td>李同学 · 初二英语</td>
+                  <td>线上</td>
+                  <td>已确认</td>
+                </tr>
+                <tr>
+                  <td>周六</td>
+                  <td>09:00-10:30</td>
+                  <td>王同学 · 六年级科学</td>
+                  <td>线下 · 家访</td>
+                  <td>待打卡</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <aside class="card" style="display: flex; flex-direction: column; gap: 24px">
+          <div>
+            <h2 style="color: #262b3f;">线下课程安全打卡</h2>
+            <p style="margin: 4px 0 12px; color: #5a627f">
+              每次线下家教开始与结束时，请完成到达/离开打卡，用于保障人身与课程安全。
+            </p>
+            <button class="safe-btn">
+              ● 到达学生家 · 立即打卡
+            </button>
+            <div style="margin-top: 12px">
+              <div>
+                <strong style="font-size: 14px;color: #262b3f;">当前线下课程</strong>
+                <p style="margin: 4px 0; color: #5a627f">
+                  王同学 · 六年级科学 · 09:00-10:30（海淀区中关村）
+                </p>
+                <span class="safe-status">到达已打卡 · 待离开打卡</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h2 style="color: #262b3f;">调课申请与审批</h2>
+            <table style="color: #262b3f;">
+              <thead>
+                <tr>
+                  <th>课程</th>
+                  <th>申请方</th>
+                  <th>状态</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>高一数学 · 周三 14:00</td>
+                  <td>家长申请</td>
+                  <td class="danger">待老师审批</td>
+                </tr>
+                <tr>
+                  <td>初二英语 · 周五 19:00</td>
+                  <td>老师申请</td>
+                  <td>家长已同意</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>
+

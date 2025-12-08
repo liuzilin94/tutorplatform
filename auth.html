@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>家教管理系统 - 登录</title>
+    <style>
+      :root {
+        font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        color: #1f2229;
+        background-color: #f4f6fb;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .auth-shell {
+        width: min(900px, 92vw);
+        background: #fff;
+        box-shadow: 0 18px 45px rgba(24, 34, 71, 0.12);
+        border-radius: 18px;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      }
+      .intro {
+        background: linear-gradient(135deg, #4d6fff, #6ac6ff);
+        color: #fff;
+        padding: 48px;
+      }
+      .intro h1 {
+        margin: 0 0 12px;
+        font-size: 32px;
+        line-height: 1.2;
+      }
+      .intro p {
+        margin: 0 0 24px;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.85);
+      }
+      .badges {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .badge {
+        padding: 6px 14px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.22);
+        font-size: 12px;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+      .panel {
+        padding: 40px 42px 48px;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      label {
+        font-size: 14px;
+        color: #3b4154;
+        margin-bottom: 6px;
+        display: inline-block;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #d8dce9;
+        border-radius: 10px;
+        font-size: 14px;
+        transition: border-color 0.2s ease;
+        box-sizing: border-box;
+      }
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: #4d6fff;
+        box-shadow: 0 0 0 3px rgba(77, 111, 255, 0.12);
+      }
+      .submit-btn {
+        background: #4d6fff;
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 14px;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
+      }
+      .submit-btn:hover {
+        box-shadow: 0 10px 25px rgba(77, 111, 255, 0.25);
+        transform: translateY(-1px);
+      }
+      .secondary-link {
+        text-align: center;
+        font-size: 13px;
+        color: #64708c;
+      }
+      .secondary-link a {
+        color: #4d6fff;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      @media (max-width: 760px) {
+        .auth-shell {
+          grid-template-columns: 1fr;
+        }
+        .intro {
+          padding: 32px;
+        }
+        .panel {
+          padding: 28px 24px 36px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="auth-shell">
+      <section class="intro">
+        <h1>家教管理系统</h1>
+        <p>
+          面向学生、家长、老师与管理者的统一入口，为账号登录、角色切换与核心业务操作提供安全、便捷的准入体验。
+        </p>
+        <div class="badges">
+          <span class="badge">多角色</span>
+          <span class="badge">安全认证</span>
+          <span class="badge">实时提醒</span>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>账号登录</h2>
+        <p style="margin: 6px 0 24px; color: #64708c">
+          请输入您的登录信息，完成身份验证后进入对应工作台。
+        </p>
+
+        <form id="loginForm">
+          <div>
+            <label for="login-account">账号 / 手机号</label>
+            <input id="login-account" type="text" placeholder="请输入账号或手机号" required />
+          </div>
+          <div>
+            <label for="login-password">密码</label>
+            <input id="login-password" type="password" placeholder="请输入密码" required />
+          </div>
+          <div>
+            <label for="login-role">登录角色</label>
+            <select id="login-role" required>
+              <option value="">请选择</option>
+              <option value="student">学生</option>
+              <option value="parent">家长</option>
+              <option value="tutor">老师</option>
+              <option value="admin">管理者</option>
+            </select>
+          </div>
+          <button type="submit" class="submit-btn">登录</button>
+          <div class="secondary-link">
+            首次使用？<a href="./register.html">前往注册</a>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <script>
+      const loginForm = document.getElementById("loginForm");
+      loginForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const role = document.getElementById("login-role").value;
+        const targetUrl =
+          role === "tutor" ? "./dashboard.html" : "./dashboard-family.html";
+        window.location.href = targetUrl;
+      });
+    </script>
+  </body>
+</html>
+

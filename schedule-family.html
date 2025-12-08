@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>家教管理系统 - 课程预约与管理</title>
+    <style>
+      :root {
+        font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        color: #181b2c;
+        background-color: #edf1fb;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        background: radial-gradient(circle at 20% 20%, #f5f8ff, #e4e8f6, #dfe3f2);
+      }
+      aside {
+        width: 268px;
+        background: #1e2445;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        padding: 32px 24px;
+        gap: 32px;
+      }
+      .brand {
+        font-size: 20px;
+        font-weight: 600;
+      }
+      nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      nav a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        padding: 10px 12px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+      }
+      nav a.active {
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+      }
+      main {
+        flex: 1;
+        padding: 40px 48px 56px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.92));
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+        padding: 16px 24px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #5168ff, #7fa7ff);
+        color: #fff;
+        box-shadow: 0 18px 35px rgba(74, 96, 255, 0.25);
+      }
+      header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+      .badge {
+        background: rgba(255, 255, 255, 0.18);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 999px;
+        font-size: 13px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 24px;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 22px;
+        padding: 24px;
+        box-shadow: 0 30px 45px rgba(31, 45, 105, 0.12);
+        backdrop-filter: blur(6px);
+      }
+      .card h2 {
+        margin: 0 0 12px;
+        font-size: 18px;
+      }
+      .card h3 {
+        margin: 0 0 8px;
+        font-size: 16px;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 14px;
+        margin: 8px 0 16px;
+      }
+      label {
+        display: block;
+        font-size: 13px;
+        margin-bottom: 4px;
+        color: #4a4f66;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(82, 97, 150, 0.2);
+        background: rgba(255, 255, 255, 0.98);
+        font-size: 14px;
+      }
+      .btn {
+        border: none;
+        border-radius: 12px;
+        padding: 10px 18px;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .btn-primary {
+        background: linear-gradient(120deg, #4f6bff, #89b1ff);
+        color: #fff;
+        box-shadow: 0 12px 24px rgba(65, 92, 255, 0.25);
+      }
+      .btn-text {
+        background: transparent;
+        color: #4d5cff;
+      }
+      .pill {
+        display: inline-flex;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        background: rgba(77, 111, 255, 0.12);
+        color: #4d5cff;
+        font-weight: 600;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        margin-top: 8px;
+      }
+      th,
+      td {
+        padding: 8px 10px;
+        border-bottom: 1px solid #e3e6f3;
+        text-align: left;
+      }
+      th {
+        color: #6a7190;
+        font-weight: 500;
+      }
+      .status-wait {
+        color: #d58000;
+        font-weight: 600;
+      }
+      .status-ok {
+        color: #14935b;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <aside>
+      <div class="brand">家教管理系统</div>
+      <nav>
+        <ul>
+          <li><a href="./dashboard-family.html">返回工作台</a></li>
+          <li><a href="./listing-family.html">家教推荐</a></li>
+          <li><a class="active" href="#">预约课程</a></li>
+          <li><a href="#">支付与账单</a></li>
+        </ul>
+      </nav>
+      <div style="font-size: 13px; color: rgba(255, 255, 255, 0.7)">
+        提示：调课/取消请尽量提前 24 小时发起
+      </div>
+    </aside>
+
+    <main>
+      <header>
+        <div>
+          <h1>课程预约与管理</h1>
+          <p style="margin: 6px 0 0; color: rgba(255, 255, 255, 0.8)">
+            为孩子预约合适时间段，并查看已约课程与调课进度
+          </p>
+        </div>
+        <span class="badge">本周已约 4 节 · 待确认 1 节</span>
+      </header>
+
+      <section class="grid">
+        <div>
+          <div class="card">
+            <h2>预约新课程</h2>
+            <div class="form-grid">
+              <div>
+                <label>选择老师</label>
+                <select>
+                  <option>请选择</option>
+                  <option>李晓雪 · 高中数学</option>
+                  <option>王晨 · 初中英语</option>
+                </select>
+              </div>
+              <div>
+                <label>授课科目</label>
+                <select>
+                  <option>数学</option>
+                  <option>英语</option>
+                  <option>语文</option>
+                </select>
+              </div>
+              <div>
+                <label>日期</label>
+                <input type="date" />
+              </div>
+              <div>
+                <label>时间段</label>
+                <input type="time" /> - <input type="time" />
+              </div>
+              <div>
+                <label>授课方式</label>
+                <select>
+                  <option>线上</option>
+                  <option>线下 · 家访</option>
+                </select>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center">
+              <button class="btn btn-primary">提交预约</button>
+              <button class="btn btn-text">与老师沟通时间</button>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top: 20px">
+            <h2>已约课程</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>日期</th>
+                  <th>时间</th>
+                  <th>老师 / 科目</th>
+                  <th>方式</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>12-02</td>
+                  <td>19:00-20:30</td>
+                  <td>李晓雪 · 高一数学</td>
+                  <td>线上</td>
+                  <td class="status-ok">已确认</td>
+                  <td><span class="pill">进入课堂</span></td>
+                </tr>
+                <tr>
+                  <td>12-05</td>
+                  <td>20:00-21:00</td>
+                  <td>王晨 · 初二英语</td>
+                  <td>线上</td>
+                  <td class="status-wait">待老师确认</td>
+                  <td><span class="pill">取消预约</span></td>
+                </tr>
+                <tr>
+                  <td>11-28</td>
+                  <td>19:00-20:30</td>
+                  <td>赵静 · 小学语文</td>
+                  <td>线下 · 家访</td>
+                  <td class="status-ok">已完成</td>
+                  <td><span class="pill">立即评价</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <aside class="card" style="display: flex; flex-direction: column; gap: 24px">
+          <div>
+            <h2 style="color: #262b3f;">调课申请</h2>
+            <p style="margin: 4px 0 10px; color: #5a627f">
+              如需调整时间，可选择已约课程并填写原因，提交给老师审批。
+            </p>
+            <div>
+              <label>选择需调课课程</label>
+              <select>
+                <option style="color: rgb(0, 0, 0)；">高一数学 · 12-02 19:00</option>
+                <option style="color: rgb(0, 0, 0)；">初二英语 · 12-05 20:00</option>
+              </select>
+            </div>
+            <div style="margin-top: 10px">
+              <label style="color: #262b3f;">期望新时间</label>
+              <input type="datetime-local" />
+            </div>
+            <div style="margin-top: 10px">
+              <label>调课原因</label>
+              <input type="text" placeholder="简要说明调课原因，如：学校班会冲突" />
+            </div>
+            <button class="btn btn-primary" style="margin-top: 12px">提交调课申请</button>
+          </div>
+
+          <div>
+            <h2>调课审批进度</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>课程</th>
+                  <th>状态</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="color: rgb(0, 0, 0);">高一数学 · 周三 19:00</td>
+                  <td class="status-wait">待老师确认</td>
+                </tr>
+                <tr>
+                  <td style="color: rgb(0, 0, 0);">英语口语 · 周五 20:00</td>
+                  <td class="status-ok">老师已同意</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>
+
